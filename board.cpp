@@ -9,6 +9,7 @@
 #include <optional>
 #include <memory>
 #include <cmath>
+#include <vector>
 
 Board::Board(){
     fSizeX = 1000;
@@ -30,6 +31,14 @@ void Board::setSizeX(int pSize){
 void Board::setSizeY(int pSize){
     fSizeY = pSize;
 }
+
+// TODO: they work, but implement to main
+//void Board::addToBoard(Battleship pToAdd){
+//    onBoard.push_back(pToAdd);
+//}
+//void Board::clearBoard(){
+//    onBoard.clear();
+//}
 
 // calc distance function
 
