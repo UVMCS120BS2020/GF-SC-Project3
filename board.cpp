@@ -58,17 +58,17 @@ int Board::moveX(Battleship pMoveMe, bool pForward) {
         int speed = pMoveMe.getSpeed();
         int start = *pMoveMe.getX();
         if (pForward){
-            if (start + speed > this->fSizeX) {
+            if (start + speed < fSizeX) {
                 pMoveMe.setX(start + speed);
-                return start + speed;
+                return (start + speed);
             } else{
-                pMoveMe.setX(this->fSizeX);
-                return this->fSizeX;
+                pMoveMe.setX(fSizeX);
+                return fSizeX;
             }
         } else{
             if (start - speed > 0) {
                 pMoveMe.setX(start - speed);
-                return start - speed;
+                return (start - speed);
             } else{
                 pMoveMe.setX(0);
                 return 0;
@@ -85,12 +85,12 @@ int Board::moveY(Battleship pMoveMe, bool pForward) {
         int speed = pMoveMe.getSpeed();
         int start = *pMoveMe.getY();
         if (pForward){
-            if (start + speed > this->fSizeY) {
+            if (start + speed < fSizeY) {
                 pMoveMe.setY(start + speed);
                 return start + speed;
             } else{
-                pMoveMe.setY(this->fSizeY);
-                return this->fSizeY;
+                pMoveMe.setY(fSizeY);
+                return fSizeY;
             }
         } else{
             if (start - speed > 0) {
