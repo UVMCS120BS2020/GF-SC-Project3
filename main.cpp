@@ -8,6 +8,7 @@
 #include <optional>
 #include <memory>
 #include "battleship.h"
+#include "destroyer.h"
 #include "board.h"
 
 using namespace std;
@@ -129,12 +130,25 @@ int main(){
 // Global function definitions
 Battleship makeUserBattleship(){
     string name;
+    char choice;
+    bool destroyer;
     int hitPoints;
     int firePower;
     int accuracy;
     int speed;
     cout << "Enter the name of your Battleship: ";
     getline(cin, name);
+    cout << "Do you want to deploy a Destroyer Battleship? (Y/N)";
+    cin >> choice;
+    while (tolower(choice) != 'y' && tolower(choice) != 'n') {
+        cout << "Please enter a 'Y' or 'N'";
+        cin >> choice;
+    }
+    if (tolower(choice) == 'y') {
+        destroyer = true;
+    } else if (tolower(choice) == 'n') {
+        destroyer = false;
+    }
     cout << "Enter the Hitpoints of your Battleship (Integer Between 100-30,000): ";
     cin >> hitPoints;
     if (hitPoints < 100 || hitPoints > 30000) {
@@ -159,8 +173,13 @@ Battleship makeUserBattleship(){
         cout << "Invalid pSpeed, set to default (50)" << endl;
         speed = 50;
     }
-    unique_ptr<Battleship> userShip = make_unique<Battleship>(name, hitPoints, firePower, accuracy, speed);
-    return *userShip;
+    if (destroyer) {
+        unique_ptr<Destroyer> userShip = make_unique<Destroyer>(name, hitPoints, firePower, accuracy, speed);
+        return *userShip;
+    } else {
+        unique_ptr<Battleship> userShip = make_unique<Battleship>(name, hitPoints, firePower, accuracy, speed);
+        return *userShip;
+    }
 }
 
 Battleship battle(Battleship &pOne, Battleship &pTwo){
