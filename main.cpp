@@ -7,8 +7,8 @@
 #include <iostream>
 #include <optional>
 #include <memory>
-#include <cmath>
 #include "battleship.h"
+#include "board.h"
 
 using namespace std;
 
@@ -25,35 +25,96 @@ Battleship makeUserBattleship();
 // effects: fires until one is destroyed (takes turns, battleship one goes first). returns the winner.
 Battleship battle(Battleship &pOne, Battleship &pTwo);
 
-// Distance calculator
-// Requires: two battleship objects
-// modifies: nothing
-// effects: returns the integer division distance (straight line), or returns 0 if the coordinates do not exist
-double calcDistance(Battleship pOne, Battleship pTwo);
-
 // MAIN
 int main(){
 
+    // initialize some variables
     Battleship userShip = makeUserBattleship();
+    Board board = Board();
     int userX;
     int userY;
     int counter = 0;
     char choice;
+    bool forward;
     while (userShip.getDestroyed() == false){
-        cout << "Enter your X position: ";
-        cin >> userX;
-        userShip.setX(userX);
-        cout << "Enter your Y position: ";
-        cin >> userY;
-        userShip.setY(userY);
+        // if initial position
+        if (userShip.getX()) {
+            // if they want to move on X
+            choice = 'a';
+            cout << "Do you want to move on the X axis (y/n)? ";
+            cin >> choice;
+            if (choice == 'Y' || choice == 'y') {
+                // move forward?
+                choice = 'a';
+                cout << "Do you want to move forward? (y/n) ";
+                cin >> choice;
+                if (choice == 'Y' || choice == 'y') {
+                    forward = true;
+                    cout << "your new X position is: " << board.moveX(userShip, forward) << endl;
+                } else if (choice == 'n' || choice != 'N') {
+                    forward = false;
+                    cout << "your new X position is: " << board.moveX(userShip, forward) << endl;
+                } else {
+                    cout << "thats not a y or an n" << endl;
+                }
+            } else if (choice == 'n' || choice != 'N') {
+                cout << "Ok, you did not move." << endl;
+            } else {
+                cout << "thats not a y or an n" << endl;
+            }
+        } else{
+            cout << "Enter your starting X position between 0 and " << board.getSizeX() << ": ";
+            cin >> userX;
+            while (userX > board.getSizeX() || userX < 0){
+                cout << "Enter a valid X: ";
+                cin >> userX;
+            }
+            userShip.setX(userX);
+        }
+        if (userShip.getY()){
+            // move on Y
+            choice = 'a';
+            cout << "Do you want to move on the Y axis (y/n)? ";
+            cin >> choice;
+            if (choice == 'Y' || choice == 'y') {
+                // move up?
+                choice = 'a';
+                cout << "Do you want to move up? (y/n) ";
+                cin >> choice;
+                if (choice == 'Y' || choice == 'y') {
+                    forward = true;
+                    cout << "your new Y position is: " << board.moveY(userShip, forward) << endl;
+                } else if (choice == 'n' || choice != 'N') {
+                    forward = false;
+                    cout << "your new Y position is: " << board.moveY(userShip, forward) << endl;
+                } else {
+                    cout << "thats not a y or an n" << endl;
+                }
+            } else if (choice == 'n' || choice != 'N') {
+                cout << "Ok, you did not move." << endl;
+            } else {
+                cout << "thats not a y or an n" << endl;
+            }
+        } else {
+            cout << "Enter your starting Y position between 0 and " << board.getSizeY() << ": ";
+            cin >> userY;
+            while (userY > board.getSizeY() || userY < 0){
+                cout << "Enter a valid Y: ";
+                cin >> userY;
+            }
+            userShip.setY(userY);
+        }
         cout << "Battle enemy ship? (Y/N) ";
+        // battle the enemy
         cin >> choice;
-        if (choice != 'Y' || choice != 'y' ){
+        if (choice == 'Y' || choice == 'y' ){
+            // count how many ships
             ++counter;
             unique_ptr<Battleship> computerPtr = make_unique<Battleship>("Computer " + to_string(counter));
+            // computer position
             computerPtr->setX(0);
             computerPtr->setY(0);
-            cout << "Your distance from " << computerPtr->getName() << " is " << calcDistance(userShip, *computerPtr) << endl;
+            cout << "Your distance from " << computerPtr->getName() << " is " << board.calcDistance(userShip, *computerPtr) << endl;
             battle(userShip, *computerPtr);
         } else if(choice == 'n' || choice != 'N') {
             cout << "you're a wimp" << endl;
@@ -62,7 +123,6 @@ int main(){
         }
     }
     cout << "You were destroyed. Game Over." << endl;
-
     return 0;
 }
 
@@ -124,26 +184,5 @@ Battleship battle(Battleship &pOne, Battleship &pTwo){
             cout << "cannot battle, " << pTwo.getName() << " is destroyed" << endl;
             return pOne;
         }
-    }
-}
-
-
-double calcDistance(Battleship pOne, Battleship pTwo) {
-    if (pOne.getX() && pTwo.getX() && pOne.getY() && pTwo.getY()) {
-        int xDifference;
-        int yDifference;
-        xDifference = (*pOne.getX() - *pTwo.getX());
-        yDifference = (*pOne.getY() - *pTwo.getY());
-
-        if (xDifference < 0) {
-            xDifference = xDifference * -1;
-        }
-        if (yDifference < 0) {
-            yDifference = yDifference * -1;
-        }
-        double totDistance = sqrt((xDifference * xDifference) + (yDifference * yDifference));
-        return totDistance;
-    } else {
-        return 0.0;
     }
 }

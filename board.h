@@ -6,6 +6,7 @@
 #include <iostream>
 #include <optional>
 #include <memory>
+#include "battleship.h"
 
 using namespace std;
 typedef optional<int> OptInt;
@@ -48,8 +49,8 @@ public:
     int moveX(Battleship pMoveMe, bool pForward);
     int moveY(Battleship pMoveMe, bool pForward);
 private:
-    fSizeX;
-    fSizeY;
+    int fSizeX;
+    int fSizeY;
 };
 
 #endif //GF_SC_PROJECT3_BOARD_H
