@@ -11,9 +11,9 @@
 
 class Destroyer : public Battleship {
 public:
-    /* Constructors */
+    // Constructors
     explicit Destroyer(Battleship boat);
-    Destroyer(string pName);
+    explicit Destroyer(string pName);
     Destroyer(string pName, int pMaxHitPoints, int pFirePower, int pAccuracy, int pSpeed);
 };
 
