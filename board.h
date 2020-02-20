@@ -44,9 +44,9 @@ public:
     // movement functions
     // requires: battleship to move, and a true/false for forward/backwards
     // modifies: the X, Y of the battleship
-    // effects: "moves" the battleship based on its speed and makes sure it is in bounds.
-    void moveX(Battleship pMoveMe, bool pForward);
-    void moveY(Battleship pMoveMe, bool pForward);
+    // effects: "moves" the battleship based on its speed and makes sure it is in bounds. returns new position.
+    int moveX(Battleship pMoveMe, bool pForward);
+    int moveY(Battleship pMoveMe, bool pForward);
 private:
     fSizeX;
     fSizeY;

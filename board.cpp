@@ -52,46 +52,56 @@ double Board::calcDistance(Battleship pOne, Battleship pTwo) {
 
 // movement functions
 
-void Board::moveX(Battleship pMoveMe, bool pForward) {
+int Board::moveX(Battleship pMoveMe, bool pForward) {
     if (pMoveMe.getX()){
         int speed = pMoveMe.getSpeed();
         int start = pMoveMe.getX();
         if (pForward){
             if (start + speed > this->fSizeX) {
                 pMoveMe.setX(start + speed);
+                return start + speed;
             } else{
                 pMoveMe.setX(this->fSizeX);
+                return this->fSizeX;
             }
         } else{
             if (start - speed > 0) {
                 pMoveMe.setX(start - speed);
+                return start - speed;
             } else{
                 pMoveMe.setX(0);
+                return 0;
             }
         }
     } else{
         cout << "cannot move, no position assigned."
+        return -1;
     }
 }
 
-void Board::moveY(Battleship pMoveMe, bool pForward) {
+int Board::moveY(Battleship pMoveMe, bool pForward) {
     if (pMoveMe.getY()){
         int speed = pMoveMe.getSpeed();
         int start = pMoveMe.getY();
         if (pForward){
             if (start + speed > this->fSizeY) {
                 pMoveMe.setY(start + speed);
+                return start + speed;
             } else{
                 pMoveMe.setY(this->fSizeY);
+                return this->fSizeY;
             }
         } else{
             if (start - speed > 0) {
                 pMoveMe.setY(start - speed);
+                return start - speed;
             } else{
                 pMoveMe.setY(0);
+                return 0;
             }
         }
     } else{
         cout << "cannot move, no position assigned."
+        return -1;
     }
 }
