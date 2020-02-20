@@ -7,6 +7,7 @@
 #include <optional>
 #include <memory>
 #include "battleship.h"
+#include <vector>
 
 using namespace std;
 typedef optional<int> OptInt;
@@ -28,6 +29,7 @@ public:
     // effects: returns the value
     int getSizeX() const;
     int getSizeY() const;
+    vector<Battleship> getShips() const;
 
     // setters
     // requires: new value
@@ -35,6 +37,14 @@ public:
     // effects: sets the field to the new value
     void setSizeX(int pSize);
     void setSizeY(int pSize);
+
+    // unqiue setters addToBoard and clearBoard
+    // requires: a ship to add to the vector (or nothing to clear)
+    // modifies: the vector of ships on the board
+    // effects: appends or clears the vector
+    // TODO: they work, but implement them to main.
+//    void addToBoard(Battleship pToAdd);
+//    void clearBoard();
 
     // Distance calculator
     // Requires: two battleship objects
@@ -51,6 +61,7 @@ public:
 private:
     int fSizeX;
     int fSizeY;
+    vector<Battleship> onBoard;
 };
 
 #endif //GF_SC_PROJECT3_BOARD_H
