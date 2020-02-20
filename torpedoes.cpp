@@ -1,15 +1,18 @@
-//
-// Created by Sean Cosgrove on 2/20/2020.
-//
+// George Fafard and Sean Cosgrove
+// Lisa Dion
+// CS 120
+// Project 3: Battleship
 
 #include "torpedoes.h"
 using namespace std;
 
 /********** Torpedoes Class **********/
 
-// Constructors
+// Default Constructor
 Torpedoes::Torpedoes() {
 }
+
+// Full Constructor
 Torpedoes::Torpedoes(int pFirePower, int pSpeed, int pRange) {
     fFirePower = pFirePower;
     fSpeed = pSpeed;

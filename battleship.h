@@ -1,6 +1,7 @@
-//
-// Created by George on 1/24/20
-//
+// George Fafard and Sean Cosgrove
+// Lisa Dion
+// CS 120
+// Project 3: Battleship
 
 #ifndef GF_SC_PROJECT3_BATTLESHIP_H
 #define GF_SC_PROJECT3_BATTLESHIP_H
@@ -17,7 +18,7 @@ public:
     // Default constructor
     // Requires: String Name
     // Modifies: fHitPoints, fFirePower, fAccuracy, fSpeed, fName
-    // Effects: Sets the fields to defualt values, and sets the Name
+    // Effects: Sets the fields to default values, and sets the Name
     Battleship(string pName);
 
     // Full Constructor

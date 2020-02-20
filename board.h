@@ -1,6 +1,7 @@
-//
-// Created by George on 2/20/20.
-//
+// George Fafard and Sean Cosgrove
+// Lisa Dion
+// CS 120
+// Project 3: Battleship
 
 #include <string>
 #include <iostream>
