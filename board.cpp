@@ -6,6 +6,7 @@
 #include <iostream>
 #include <optional>
 #include <memory>
+#include <cmath>
 
 Board::Board(){
     fSizeX = 1000;
@@ -13,18 +14,18 @@ Board::Board(){
 }
 
 // Getters
-int Board::getSizeY(){
+int Board::getSizeY() const{
     return fSizeY;
 }
-int Board::getSizeX(){
+int Board::getSizeX() const{
     return fSizeX;
 }
 
 // Setters
-void setSizeX(int pSize){
+void Board::setSizeX(int pSize){
     fSizeX = pSize;
 }
-void setSizeY(int pSize){
+void Board::setSizeY(int pSize){
     fSizeY = pSize;
 }
 
@@ -55,7 +56,7 @@ double Board::calcDistance(Battleship pOne, Battleship pTwo) {
 int Board::moveX(Battleship pMoveMe, bool pForward) {
     if (pMoveMe.getX()){
         int speed = pMoveMe.getSpeed();
-        int start = pMoveMe.getX();
+        int start = *pMoveMe.getX();
         if (pForward){
             if (start + speed > this->fSizeX) {
                 pMoveMe.setX(start + speed);
@@ -74,7 +75,7 @@ int Board::moveX(Battleship pMoveMe, bool pForward) {
             }
         }
     } else{
-        cout << "cannot move, no position assigned."
+        cout << "cannot move, no position assigned.";
         return -1;
     }
 }
@@ -82,7 +83,7 @@ int Board::moveX(Battleship pMoveMe, bool pForward) {
 int Board::moveY(Battleship pMoveMe, bool pForward) {
     if (pMoveMe.getY()){
         int speed = pMoveMe.getSpeed();
-        int start = pMoveMe.getY();
+        int start = *pMoveMe.getY();
         if (pForward){
             if (start + speed > this->fSizeY) {
                 pMoveMe.setY(start + speed);
@@ -101,7 +102,7 @@ int Board::moveY(Battleship pMoveMe, bool pForward) {
             }
         }
     } else{
-        cout << "cannot move, no position assigned."
+        cout << "cannot move, no position assigned.";
         return -1;
     }
 }
