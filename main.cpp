@@ -9,17 +9,24 @@
 #include <memory>
 #include "battleship.h"
 #include "destroyer.h"
+#include "torpedoes.h"
 #include "board.h"
 
 using namespace std;
 
+/********** Global functions declarations **********/
 
-// Global functions declarations
 // make user battleship
 // Requires: nothing
 // modifies: creates a new battleship with user input values
 // effects: returns a new battleship
 Battleship makeUserBattleship();
+
+// make user destroyer
+// Requires: nothing
+// modifies: creates a new destroyer with user input values
+// effects: returns a new destroyer
+Destroyer makeUserDestroyer();
 
 // Requires: two battleships
 // modifies: hitpoints of the battleships
@@ -30,12 +37,23 @@ Battleship battle(Battleship &pOne, Battleship &pTwo);
 int main(){
 
     // initialize some variables
-    Battleship userShip = makeUserBattleship();
+    Battleship userShip = Battleship("");
+    char choice;
+    cout << "Do you want to deploy a Destroyer Battleship? (Y/N) ";
+    cin >> choice;
+    while (tolower(choice) != 'y' && tolower(choice) != 'n') {
+        cout << "Please enter a 'Y' or 'N'";
+        cin >> choice;
+    }
+    if (tolower(choice) == 'y') {
+        Destroyer userShip = makeUserDestroyer();
+    } else if (tolower(choice) == 'n') {
+        Battleship userShip = makeUserBattleship();
+    }
     Board board = Board();
     int userX;
     int userY;
     int counter = 0;
-    char choice;
     bool forward;
     while (userShip.getDestroyed() == false){
         // if initial position
@@ -127,28 +145,17 @@ int main(){
     return 0;
 }
 
-// Global function definitions
-Battleship makeUserBattleship(){
+/********** Global function definitions **********/
+
+// make user battleship function
+Battleship makeUserBattleship() {
     string name;
-    char choice;
-    bool destroyer;
     int hitPoints;
     int firePower;
     int accuracy;
     int speed;
     cout << "Enter the name of your Battleship: ";
-    getline(cin, name);
-    cout << "Do you want to deploy a Destroyer Battleship? (Y/N)";
-    cin >> choice;
-    while (tolower(choice) != 'y' && tolower(choice) != 'n') {
-        cout << "Please enter a 'Y' or 'N'";
-        cin >> choice;
-    }
-    if (tolower(choice) == 'y') {
-        destroyer = true;
-    } else if (tolower(choice) == 'n') {
-        destroyer = false;
-    }
+    cin >> name;
     cout << "Enter the Hitpoints of your Battleship (Integer Between 100-30,000): ";
     cin >> hitPoints;
     if (hitPoints < 100 || hitPoints > 30000) {
@@ -173,15 +180,48 @@ Battleship makeUserBattleship(){
         cout << "Invalid pSpeed, set to default (50)" << endl;
         speed = 50;
     }
-    if (destroyer) {
-        unique_ptr<Destroyer> userShip = make_unique<Destroyer>(name, hitPoints, firePower, accuracy, speed);
-        return *userShip;
-    } else {
-        unique_ptr<Battleship> userShip = make_unique<Battleship>(name, hitPoints, firePower, accuracy, speed);
-        return *userShip;
-    }
+    unique_ptr<Battleship> userShip = make_unique<Battleship>(name, hitPoints, firePower, accuracy, speed);
+    return *userShip;
 }
 
+// make user destroyer function
+Destroyer makeUserDestroyer() {
+    string name;
+    int hitPoints;
+    int firePower;
+    int accuracy;
+    int speed;
+    cout << "Enter the name of your Battleship: ";
+    cin >> name;
+    cout << "Enter the Hitpoints of your Battleship (Integer Between 100-30,000): ";
+    cin >> hitPoints;
+    if (hitPoints < 100 || hitPoints > 30000) {
+        cout << "Invalid hit points, set to default (1,000)" << endl;
+        hitPoints = 1000;
+    }
+    cout << "Enter the Fire Power of your Battleship (Between 50,000-1,000,000): ";
+    cin >> firePower;
+    if (firePower < 50000 || firePower > 1000000) {
+        cout << "Invalid fire power, set to default (50,000)" << endl;
+        firePower = 50000;
+    }
+    cout << "Enter the Accuracy of your Battleship (Between 1-100): ";
+    cin >> accuracy;
+    if (accuracy < 0 || accuracy > 100) {
+        cout << "Invalid pAccuracy, set to default (75)" << endl;
+        accuracy = 75;
+    }
+    cout << "Enter the Speed of your Battleship (Between 1-100): ";
+    cin >> speed;
+    if (speed < 0 || speed > 100){
+        cout << "Invalid pSpeed, set to default (50)" << endl;
+        speed = 50;
+    }
+    unique_ptr<Destroyer> userShip = make_unique<Destroyer>(name, hitPoints, firePower, accuracy, speed);
+    return *userShip;
+}
+
+// battle function
 Battleship battle(Battleship &pOne, Battleship &pTwo){
     if (pOne.getDestroyed() == false && pTwo.getDestroyed() == false) {
         while (pOne.getDestroyed() == false && pTwo.getDestroyed() == false) {

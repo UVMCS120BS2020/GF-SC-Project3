@@ -44,6 +44,12 @@ public:
     // Modifies: Torpedoes field
     // Effects: Sets Torpedoes field in Destroyer
     void setTorpedoes(int pFirePower, int pSpeed, int pRange);
+
+    // Fire method
+    // Requires: target Destroyer object
+    // Modifies: the currentHitPoints of the second battleship object.
+    // Effects: lowers the HP of the second battleship, checks if it is destroyed.
+    void fire(Destroyer &pReceiving);
 };
 
 #endif //GF_SC_PROJECT3_DESTROYER_H

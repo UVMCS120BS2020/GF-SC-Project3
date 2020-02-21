@@ -40,9 +40,9 @@ public:
 
 private:
     // Fields
-    int fFirePower;
-    int fSpeed;
-    int fRange;
+    int fFirePower = 50000;
+    int fSpeed = 15;
+    int fRange = 15;
 };
 
 #endif //GF_SC_PROJECT3_TORPEDOES_H
