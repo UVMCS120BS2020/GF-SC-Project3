@@ -46,11 +46,13 @@ Battleship makeUserBattleship();
 // Effects: returns a new destroyer
 Destroyer makeUserDestroyer();
 
+// battle
 // Requires: two battleships
 // Modifies: hitpoints of the battleships
 // Effects: fires until one is destroyed (takes turns, battleship one goes first). returns the winner.
 Battleship battle(Battleship &pOne, Battleship &pTwo);
 
+// destroyer battle
 // Requires: two destroyers
 // Modifies: hitpoints of the battleships
 // Effects: fires until one is destroyed (takes turns, destroyer one goes first). returns the winner.
@@ -388,7 +390,7 @@ Battleship battle(Battleship &pOne, Battleship &pTwo){
     }
 }
 
-// battle function
+// destroyerBattle function
 Destroyer destroyerBattle(Destroyer &pOne, Destroyer &pTwo){
     if (pOne.getDestroyed() == false && pTwo.getDestroyed() == false) {
         while (pOne.getDestroyed() == false && pTwo.getDestroyed() == false) {
