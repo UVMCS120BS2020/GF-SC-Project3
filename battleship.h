@@ -16,6 +16,12 @@ typedef optional<int> OptInt;
 class Battleship{
 public:
     // Default constructor
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: creates a battleship object
+    Battleship();
+
+    // Alternate constructor
     // Requires: String Name
     // Modifies: fHitPoints, fFirePower, fAccuracy, fSpeed, fName
     // Effects: Sets the fields to default values, and sets the Name

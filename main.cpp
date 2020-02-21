@@ -33,23 +33,36 @@ Destroyer makeUserDestroyer();
 // effects: fires until one is destroyed (takes turns, battleship one goes first). returns the winner.
 Battleship battle(Battleship &pOne, Battleship &pTwo);
 
+// Requires: two destroyers
+// modifies: hitpoints of the battleships
+// effects: fires until one is destroyed (takes turns, destroyer one goes first). returns the winner.
+Destroyer destroyerBattle(Destroyer &pOne, Destroyer &pTwo);
+
 // MAIN
 int main(){
 
     // initialize some variables
-    Battleship userShip = Battleship("");
+    bool userDestroyer;
     char choice;
-    cout << "Do you want to deploy a Destroyer Battleship? (Y/N) ";
+    /*cout << "Do you want to deploy a Destroyer Battleship? (Y/N) ";
     cin >> choice;
     while (tolower(choice) != 'y' && tolower(choice) != 'n') {
         cout << "Please enter a 'Y' or 'N'";
         cin >> choice;
     }
+
     if (tolower(choice) == 'y') {
         Destroyer userShip = makeUserDestroyer();
+        userDestroyer = true;
     } else if (tolower(choice) == 'n') {
         Battleship userShip = makeUserBattleship();
+        userDestroyer = false;
+    } else {
+        Battleship userShip = makeUserBattleship();
+        userDestroyer = false;
     }
+    */
+    Battleship userShip = makeUserBattleship();
     Board board = Board();
     int userX;
     int userY;
@@ -129,12 +142,21 @@ int main(){
         if (choice == 'Y' || choice == 'y' ){
             // count how many ships
             ++counter;
-            unique_ptr<Battleship> computerPtr = make_unique<Battleship>("Computer " + to_string(counter));
-            // computer position
-            computerPtr->setX(0);
-            computerPtr->setY(0);
-            cout << "Your distance from " << computerPtr->getName() << " is " << board.calcDistance(userShip, *computerPtr) << endl;
-            battle(userShip, *computerPtr);
+            if (userDestroyer) {
+                unique_ptr<Destroyer> computerPtr = make_unique<Destroyer>("Computer " + to_string(counter));
+                // computer position
+                computerPtr->setX(0);
+                computerPtr->setY(0);
+                cout << "Your distance from " << computerPtr->getName() << " is " << board.calcDistance(userShip, *computerPtr) << endl;
+                //destroyerBattle(userShip, *computerPtr);
+            } else {
+                unique_ptr<Battleship> computerPtr = make_unique<Battleship>("Computer " + to_string(counter));
+                // computer position
+                computerPtr->setX(0);
+                computerPtr->setY(0);
+                cout << "Your distance from " << computerPtr->getName() << " is " << board.calcDistance(userShip, *computerPtr) << endl;
+                battle(userShip, *computerPtr);
+            }
         } else if(choice == 'n' || choice != 'N') {
             cout << "you're a wimp" << endl;
         } else {
@@ -223,6 +245,31 @@ Destroyer makeUserDestroyer() {
 
 // battle function
 Battleship battle(Battleship &pOne, Battleship &pTwo){
+    if (pOne.getDestroyed() == false && pTwo.getDestroyed() == false) {
+        while (pOne.getDestroyed() == false && pTwo.getDestroyed() == false) {
+            pOne.fire(pTwo);
+            if (pTwo.getDestroyed() == false) {
+                pTwo.fire(pOne);
+            }
+        }
+        if (pOne.getDestroyed() == false) {
+            return pOne;
+        } else {
+            return pTwo;
+        }
+    } else{
+        if (pOne.getDestroyed()){
+            cout << "cannot battle, " << pOne.getName() << " is destroyed" << endl;
+            return pTwo;
+        } else{
+            cout << "cannot battle, " << pTwo.getName() << " is destroyed" << endl;
+            return pOne;
+        }
+    }
+}
+
+// battle function
+Destroyer destroyerBattle(Destroyer &pOne, Destroyer &pTwo){
     if (pOne.getDestroyed() == false && pTwo.getDestroyed() == false) {
         while (pOne.getDestroyed() == false && pTwo.getDestroyed() == false) {
             pOne.fire(pTwo);
