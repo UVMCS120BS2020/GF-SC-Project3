@@ -297,7 +297,7 @@ Battleship makeUserBattleship() {
     int accuracy;
     int speed;
     cout << "Enter the name of your Battleship: ";
-    getline(cin, name);
+    cin >> name;
     cout << "Enter the Hitpoints of your Battleship (Integer Between 100-30,000): ";
     cin >> hitPoints;
     if (hitPoints < 100 || hitPoints > 30000) {
@@ -335,7 +335,7 @@ Destroyer makeUserDestroyer() {
     int accuracy;
     int speed;
     cout << "Enter the name of your Battleship: ";
-    getline(cin, name);
+    cin >> name;
     cout << "Enter the Hitpoints of your Battleship (Integer Between 100-30,000): ";
     cin >> hitPoints;
     if (hitPoints < 100 || hitPoints > 30000) {
